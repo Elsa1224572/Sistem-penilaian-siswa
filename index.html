@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Guru</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to bottom, #001f4d, #003366);
+      padding: 20px;
+    }
+
+    .login-card {
+      background: #0a1f44;
+      border-radius: 12px;
+      padding: 40px 30px;
+      width: 100%;
+      max-width: 320px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .login-card h2 {
+      margin-bottom: 25px;
+      font-size: 24px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    input::placeholder {
+      color: #999;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #error {
+      color: #ff4d4d;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .link-register {
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .link-register a {
+      color: #00bfff;
+      text-decoration: none;
+    }
+
+    .link-register a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 30px 20px;
+      }
+
+      .login-card h2 {
+        font-size: 20px;
+      }
+
+      input, button {
+        font-size: 13px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <p id="error"></p>
+    <p class="link-register">
+      Belum punya akun? <a href="register.html">Daftar di sini</a>
+    </p>
+  </div>
+
+  <script>
+    function login() {
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
+
+      const found = accounts.find(acc => acc.email === user && acc.password === pass);
+
+      if (found) {
+        localStorage.setItem("login", "true");
+        localStorage.setItem("user", user);
+        window.location.href = "dashboard.html";
+      } else {
+        document.getElementById("error").innerText = "Email atau password salah!";
+      }
+    }
+  </script>
+</body>
+</html>
